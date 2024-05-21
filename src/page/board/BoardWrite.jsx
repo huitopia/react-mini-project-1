@@ -33,7 +33,16 @@ export function BoardWrite() {
         });
         navigate("/");
       })
-      .catch()
+      .catch((e) => {
+        const code = e.response.status;
+        if (code === 400) {
+          toast({
+            status: "error",
+            description: "contents error",
+            position: "top",
+          });
+        }
+      })
       .finally();
   }
 
