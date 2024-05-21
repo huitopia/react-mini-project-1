@@ -42,7 +42,26 @@ export function BoardView() {
       .finally();
   }, []);
   function handleClickRemove() {
-    axios.delete(`/api/board/${id}`).then();
+    axios
+      .delete(`/api/board/${id}`)
+      .then(() => {
+        toast({
+          status: "success",
+          description: `${id}번 게시물이 삭제되었습니다.`,
+          position: "top",
+        });
+        navigate("/");
+      })
+      .catch(() => {
+        toast({
+          status: "error",
+          description: `${id}번 게시물 삭제 중 오류 발생`,
+          position: "top",
+        });
+      })
+      .finally(() => {
+        onClose(); // modal
+      });
   }
   if (board == null) {
     return <Spinner />;
