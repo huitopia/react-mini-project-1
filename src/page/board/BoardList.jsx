@@ -1,11 +1,18 @@
 import { Box, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState([]);
-  // [{id:1,title:"title1",content:"content1"},{},...]
+  useEffect(() => {
+    axios
+      .get("/api/board/list")
+      .then((res) => setBoardList(res.data))
+      .catch()
+      .finally();
+  }, []);
   return (
     <Box>
       <Box>게시물 목록</Box>
@@ -16,7 +23,7 @@ export function BoardList() {
               <Th>#</Th>
               <Th>TITLE</Th>
               <Th>
-                CONTENT <FontAwesomeIcon icon={faPen} />
+                <FontAwesomeIcon icon={faUserSecret} />
               </Th>
             </Tr>
           </Thead>
@@ -25,7 +32,7 @@ export function BoardList() {
               <Tr key={board.id}>
                 <Td>{board.id}</Td>
                 <Td>{board.title}</Td>
-                <Td>{board.content}</Td>
+                <Td>{board.writer}</Td>
               </Tr>
             ))}
           </Tbody>
