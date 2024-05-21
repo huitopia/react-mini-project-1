@@ -45,7 +45,7 @@ export function BoardWrite() {
           });
         }
       })
-      .finally(setLoading(false));
+      .finally(() => setLoading(false));
   }
 
   let disableSaveButton = false;
