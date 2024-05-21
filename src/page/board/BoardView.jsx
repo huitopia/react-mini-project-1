@@ -99,7 +99,12 @@ export function BoardView() {
         </FormControl>
       </Box>
       <Box>
-        <Button colorScheme={"cyan"}>Update</Button>
+        <Button
+          colorScheme={"cyan"}
+          onClick={() => navigate(`/edit/${board.id}`)}
+        >
+          Update
+        </Button>
         <Button colorScheme={"red"} onClick={onOpen}>
           Delete
         </Button>
