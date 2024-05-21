@@ -46,6 +46,16 @@ export function BoardWrite() {
       .finally();
   }
 
+  let disableSaveButton = false;
+  if (title.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (content.trim().length === 0) {
+    disableSaveButton = true;
+  }
+  if (writer.trim().length === 0) {
+    disableSaveButton = true;
+  }
   return (
     <Box>
       <Box>글 작성 화면</Box>
@@ -69,7 +79,11 @@ export function BoardWrite() {
           </FormControl>
         </Box>
         <Box>
-          <Button colorScheme={"blue"} onClick={handleSaveClick}>
+          <Button
+            isDisabled={disableSaveButton}
+            colorScheme={"blue"}
+            onClick={handleSaveClick}
+          >
             save
           </Button>
         </Box>
