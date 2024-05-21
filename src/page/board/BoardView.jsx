@@ -1,16 +1,35 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, FormControl, FormLabel, Input, Spinner } from "@chakra-ui/react";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Spinner,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
 
 export function BoardView() {
   const [board, setBoard] = useState(null);
   const { id } = useParams();
+  const toast = useToast();
+  const navigate = useNavigate();
   useEffect(() => {
     axios
       .get(`/api/board/${id}`)
       .then((res) => setBoard(res.data))
-      .catch()
+      .catch((err) => {
+        if (err.response.status == 404) {
+          toast({
+            status: "info",
+            description: "not found content",
+            position: "top",
+          });
+          navigate("/");
+        }
+      })
       .finally();
   }, []);
 
@@ -29,7 +48,7 @@ export function BoardView() {
       <Box>
         <FormControl>
           <FormLabel>content</FormLabel>
-          <Input value={board.content} readOnly={true} />
+          <Textarea readOnly={true}>{board.content}</Textarea>
         </FormControl>
       </Box>
       <Box>
