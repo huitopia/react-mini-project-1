@@ -19,6 +19,20 @@ export function Navbar() {
       >
         Write
       </Box>
+      <Box
+        _hover={{ bgColor: "gray.100" }}
+        onClick={() => navigate("/member/list")}
+        cursor={"pointer"}
+      >
+        MemberList
+      </Box>
+      <Box
+        _hover={{ bgColor: "gray.100" }}
+        onClick={() => navigate("/signup")}
+        cursor={"pointer"}
+      >
+        SignUp
+      </Box>
     </Flex>
   );
 }
