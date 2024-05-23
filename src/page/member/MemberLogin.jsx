@@ -20,6 +20,7 @@ export function MemberLogin() {
     axios
       .post("/api/member/token", { email, password })
       .then((res) => {
+        localStorage.setItem("token", res.data.token);
         toast({
           status: "success",
           description: "login ok",
