@@ -24,7 +24,7 @@ import { useNavigate, useParams } from "react-router-dom";
 export function MemberEdit() {
   const [member, setMember] = useState(null);
   const [oldPassword, setOldPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState();
+  const [passwordCheck, setPasswordCheck] = useState("");
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
@@ -57,25 +57,36 @@ export function MemberEdit() {
       .catch(() => {})
       .finally(() => {});
   }
+
   if (member === null) {
     return <Spinner />;
   }
 
   let isDisableNickNameCheckButton = false;
-  if (member.nickName === oldNickName || member.nickName.length == 0) {
+
+  if (member.nickName === oldNickName) {
+    isDisableNickNameCheckButton = true;
+  }
+
+  if (member.nickName.length == 0) {
     isDisableNickNameCheckButton = true;
   }
 
   if (isCheckedNickName) {
-    isDisableNickNameCheckButton = false;
+    isDisableNickNameCheckButton = true;
   }
 
   let isDisableSaveButton = false;
-  if (
-    member.password !== passwordCheck ||
-    member.nickName.trim().length === 0 ||
-    !isCheckedNickName
-  ) {
+
+  if (member.password !== passwordCheck) {
+    isDisableSaveButton = true;
+  }
+
+  if (member.nickName.trim().length === 0) {
+    isDisableSaveButton = true;
+  }
+
+  if (!isCheckedNickName) {
     isDisableSaveButton = true;
   }
 
@@ -131,7 +142,7 @@ export function MemberEdit() {
             <FormLabel>암호 확인</FormLabel>
             <Input onChange={(e) => setPasswordCheck(e.target.value)} />
             {member.password === passwordCheck || (
-              <FormHelperText>암호 불일치</FormHelperText>
+              <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
             )}
           </FormControl>
         </Box>
@@ -168,21 +179,22 @@ export function MemberEdit() {
         </Box>
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>기존 암호 확인</ModalHeader>
-            <ModalBody>
-              <FormControl>
-                <FormLabel>기존 암호</FormLabel>
-                <Input onChange={(e) => setOldPassword(e.target.value)} />
-              </FormControl>
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>cancel</Button>
-              <Button onClick={handleClickSave}>ok</Button>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>기존 암호 확인</ModalHeader>
+          <ModalBody>
+            <FormControl>
+              <FormLabel>기존 암호</FormLabel>
+              <Input onChange={(e) => setOldPassword(e.target.value)} />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>취소</Button>
+            <Button colorScheme="blue" onClick={handleClickSave}>
+              확인
+            </Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </Box>
   );
