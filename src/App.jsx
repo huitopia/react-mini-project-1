@@ -10,9 +10,7 @@ import { MemberList } from "./page/member/MemberList.jsx";
 import { MemberInfo } from "./page/member/MemberInfo.jsx";
 import { MemberEdit } from "./page/member/MemberEdit.jsx";
 import { MemberLogin } from "./page/member/MemberLogin.jsx";
-import { createContext } from "react";
-
-const LoginContext = createContext(null);
+import { LoginProvider } from "./component/LoginProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -58,10 +56,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-function LoginProvider({ children }) {
-  return <LoginContext.Provider value={null}>{children}</LoginContext.Provider>;
-}
 
 function App() {
   return (
