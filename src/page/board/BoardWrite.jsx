@@ -7,15 +7,16 @@ import {
   Textarea,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../component/LoginProvider.jsx";
 
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [writer, setWriter] = useState("");
   const [loading, setLoading] = useState(false);
+  const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -25,11 +26,10 @@ export function BoardWrite() {
       .post("/api/board/add", {
         title,
         content,
-        writer,
       })
       .then(() => {
         toast({
-          description: "new content create",
+          description: "새 글이 등록되었습니다.",
           status: "success",
           position: "top",
         });
@@ -37,10 +37,11 @@ export function BoardWrite() {
       })
       .catch((e) => {
         const code = e.response.status;
+
         if (code === 400) {
           toast({
             status: "error",
-            description: "contents error",
+            description: "등록되지 않았습니다. 입력한 내용을 확인하세요.",
             position: "top",
           });
         }
@@ -55,29 +56,27 @@ export function BoardWrite() {
   if (content.trim().length === 0) {
     disableSaveButton = true;
   }
-  if (writer.trim().length === 0) {
-    disableSaveButton = true;
-  }
+
   return (
     <Box>
       <Box>글 작성 화면</Box>
       <Box>
         <Box>
           <FormControl>
-            <FormLabel>title</FormLabel>
+            <FormLabel>제목</FormLabel>
             <Input onChange={(e) => setTitle(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
           <FormControl>
-            <FormLabel>contents</FormLabel>
+            <FormLabel>본문</FormLabel>
             <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
         </Box>
         <Box>
           <FormControl>
-            <FormLabel>writer</FormLabel>
-            <Input onChange={(e) => setWriter(e.target.value)} />
+            <FormLabel>작성자</FormLabel>
+            <Input readOnly value={account.nickName} />
           </FormControl>
         </Box>
         <Box>
@@ -87,7 +86,7 @@ export function BoardWrite() {
             colorScheme={"blue"}
             onClick={handleSaveClick}
           >
-            save
+            저장
           </Button>
         </Box>
       </Box>
