@@ -1,12 +1,20 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 export const LoginContext = createContext(null);
 export function LoginProvider({ children }) {
   const [email, setEmail] = useState("");
   const [nickName, setNickName] = useState("");
-  const [expired, setExpired] = useState(0);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("token : " + token);
+    if (token === null) {
+      return;
+    }
+    login(token);
+  }, []);
 
+  const [expired, setExpired] = useState(0);
   // isLoggedIn
   const isLoggedIn = () => {
     // 현재 날짜 < token
