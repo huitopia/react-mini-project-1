@@ -60,17 +60,22 @@ export function MemberEdit() {
   if (member === null) {
     return <Spinner />;
   }
+
   let isDisableNickNameCheckButton = false;
   if (member.nickName === oldNickName || member.nickName.length == 0) {
     isDisableNickNameCheckButton = true;
   }
 
-  let isDisableSaveButton = false;
-  if (member.password !== passwordCheck) {
-    isDisableSaveButton = true;
+  if (isCheckedNickName) {
+    isDisableNickNameCheckButton = false;
   }
 
-  if (member.nickName.trim().length === 0) {
+  let isDisableSaveButton = false;
+  if (
+    member.password !== passwordCheck ||
+    member.nickName.trim().length === 0 ||
+    !isCheckedNickName
+  ) {
     isDisableSaveButton = true;
   }
 
@@ -134,9 +139,11 @@ export function MemberEdit() {
           <FormControl>별명</FormControl>
           <InputGroup>
             <Input
-              onChange={(e) =>
-                setMember({ ...member, nickName: e.target.value.trim() })
-              }
+              onChange={(e) => {
+                const newNickName = e.target.value.trim();
+                setMember({ ...member, nickName: newNickName });
+                setIsCheckedNickName(newNickName === oldNickName);
+              }}
               value={member.nickName}
             />
             <InputRightElement w={"75px"} mr={1}>
