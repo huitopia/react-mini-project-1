@@ -15,48 +15,58 @@ export function Navbar() {
       >
         HOME
       </Box>
-      <Box
-        _hover={{ bgColor: "gray.100" }}
-        cursor={"pointer"}
-        onClick={() => navigate("/write")}
-      >
-        Write
-      </Box>
-      <Box
-        _hover={{ bgColor: "gray.100" }}
-        onClick={() => navigate("/member/list")}
-        cursor={"pointer"}
-      >
-        MemberList
-      </Box>
-      <Box
-        _hover={{ bgColor: "gray.100" }}
-        onClick={() => navigate("/signup")}
-        cursor={"pointer"}
-      >
-        SignUp
-      </Box>
-      <Box
-        onClick={() => navigate("/login")}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        LogIn
-      </Box>
-      <Box
-        onClick={() => {
-          account.logout();
-          navigate("/login");
-        }}
-        cursor={"pointer"}
-        _hover={{
-          bgColor: "gray.200",
-        }}
-      >
-        LogOut
-      </Box>
+      {account.isLoggedIn() && (
+        <Box
+          _hover={{ bgColor: "gray.100" }}
+          cursor={"pointer"}
+          onClick={() => navigate("/write")}
+        >
+          Write
+        </Box>
+      )}
+      {account.isLoggedIn() && (
+        <Box
+          _hover={{ bgColor: "gray.100" }}
+          onClick={() => navigate("/member/list")}
+          cursor={"pointer"}
+        >
+          MemberList
+        </Box>
+      )}
+      {account.isLoggedIn() || (
+        <Box
+          _hover={{ bgColor: "gray.100" }}
+          onClick={() => navigate("/signup")}
+          cursor={"pointer"}
+        >
+          SignUp
+        </Box>
+      )}
+      {account.isLoggedIn() || (
+        <Box
+          onClick={() => navigate("/login")}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          LogIn
+        </Box>
+      )}
+      {account.isLoggedIn() && (
+        <Box
+          onClick={() => {
+            account.logout();
+            navigate("/login");
+          }}
+          cursor={"pointer"}
+          _hover={{
+            bgColor: "gray.200",
+          }}
+        >
+          LogOut
+        </Box>
+      )}
     </Flex>
   );
 }
