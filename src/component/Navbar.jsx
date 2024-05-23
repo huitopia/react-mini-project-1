@@ -40,7 +40,19 @@ export function Navbar() {
           bgColor: "gray.200",
         }}
       >
-        Login
+        LogIn
+      </Box>
+      <Box
+        onClick={() => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        }}
+        cursor={"pointer"}
+        _hover={{
+          bgColor: "gray.200",
+        }}
+      >
+        LogOut
       </Box>
     </Flex>
   );
