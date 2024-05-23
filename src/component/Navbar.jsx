@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Spacer } from "@chakra-ui/react";
 import { useContext } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -22,6 +24,13 @@ export function Navbar() {
           onClick={() => navigate("/write")}
         >
           Write
+        </Box>
+      )}
+      <Spacer />
+      {account.isLoggedIn() && (
+        <Box>
+          {account.nickName}
+          <FontAwesomeIcon icon={faUser} />
         </Box>
       )}
       {account.isLoggedIn() && (
