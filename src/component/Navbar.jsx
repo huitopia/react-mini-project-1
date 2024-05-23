@@ -33,6 +33,15 @@ export function Navbar() {
       >
         SignUp
       </Box>
+      <Box
+        onClick={() => navigate("/login")}
+        cursor={"pointer"}
+        _hover={{
+          bgColor: "gray.200",
+        }}
+      >
+        Login
+      </Box>
     </Flex>
   );
 }
