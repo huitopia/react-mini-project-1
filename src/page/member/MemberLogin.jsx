@@ -25,6 +25,7 @@ export function MemberLogin() {
           status: "success",
           description: "login ok",
           position: "top",
+          duration: 1000,
         });
         navigate("/");
       })
@@ -34,6 +35,7 @@ export function MemberLogin() {
           status: "warning",
           description: "fail",
           position: "top",
+          duration: 1000,
         });
       });
   }
