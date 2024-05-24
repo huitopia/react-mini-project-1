@@ -17,9 +17,10 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { LoginContext } from "../../component/LoginProvider.jsx";
 
 export function MemberEdit() {
   const [member, setMember] = useState(null);
@@ -28,6 +29,7 @@ export function MemberEdit() {
   const [isCheckedNickName, setIsCheckedNickName] = useState(true);
   const [oldNickName, setOldNickName] = useState("");
   const { id } = useParams();
+  const account = useContext(LoginContext);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -60,6 +62,7 @@ export function MemberEdit() {
           position: "top",
           duration: 1000,
         });
+        account.login(res.data.token);
         navigate(-1);
       })
       .catch(() => {
