@@ -53,9 +53,26 @@ export function MemberEdit() {
   function handleClickSave() {
     axios
       .put("/api/member/modify", { ...member, oldPassword })
-      .then((res) => {})
-      .catch(() => {})
-      .finally(() => {});
+      .then((res) => {
+        toast({
+          status: "success",
+          description: "회원 정보 수정 완료",
+          position: "top",
+          duration: 1000,
+        });
+        navigate(-1);
+      })
+      .catch(() => {
+        toast({
+          status: "error",
+          description: "회원 정보가 수정되지 않았습니다.",
+          position: "top",
+        });
+      })
+      .finally(() => {
+        onClose();
+        setOldPassword("");
+      });
   }
 
   if (member === null) {
