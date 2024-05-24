@@ -5,6 +5,9 @@ export const LoginContext = createContext(null);
 export function LoginProvider({ children }) {
   const [id, setId] = useState("");
   const [nickName, setNickName] = useState("");
+  const [expired, setExpired] = useState(0);
+  const [authority, setAuthority] = useState([]);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     console.log("token : " + token);
@@ -14,7 +17,6 @@ export function LoginProvider({ children }) {
     login(token);
   }, []);
 
-  const [expired, setExpired] = useState(0);
   // isLoggedIn
   const isLoggedIn = () => {
     // 현재 날짜 < token
@@ -24,6 +26,9 @@ export function LoginProvider({ children }) {
   function hasAccess(param) {
     return id == param;
   }
+  function isAdmin() {
+    return authority.includes("admin");
+  }
   // login
   const login = (token) => {
     localStorage.setItem("token", token);
@@ -31,6 +36,7 @@ export function LoginProvider({ children }) {
     setExpired(payload.exp);
     setId(payload.sub);
     setNickName(payload.nickName);
+    setAuthority(payload.scope.split(" ")); // "admin manager user"
   };
   // logout
   const logout = () => {
@@ -38,6 +44,7 @@ export function LoginProvider({ children }) {
     setExpired(0);
     setId("");
     setNickName("");
+    setAuthority([]);
   };
 
   return (
@@ -49,6 +56,7 @@ export function LoginProvider({ children }) {
         logout,
         isLoggedIn,
         hasAccess,
+        isAdmin,
       }}
     >
       {children}

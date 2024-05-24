@@ -39,7 +39,7 @@ export function Navbar() {
           <FontAwesomeIcon icon={faUser} />
         </Box>
       )}
-      {account.isLoggedIn() && (
+      {account.isAdmin() && (
         <Box
           _hover={{ bgColor: "gray.100" }}
           onClick={() => navigate("/member/list")}
