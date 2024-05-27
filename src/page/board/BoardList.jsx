@@ -40,6 +40,10 @@ export function BoardList() {
       })
       .catch()
       .finally();
+
+    setSearchType("all");
+    setSearchKeyword("");
+
     const typeParam = searchParams.get("type");
     const keywordParam = searchParams.get("keyword");
     if (typeParam) {
