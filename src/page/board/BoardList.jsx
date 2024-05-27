@@ -1,4 +1,4 @@
-import { Box, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -15,7 +15,7 @@ export function BoardList() {
       .then((res) => setBoardList(res.data))
       .catch()
       .finally();
-  }, []);
+  }, [searchParams]); // searchParams 변경 시 함수 재실행
   return (
     <Box>
       <Box>게시물 목록</Box>
@@ -45,6 +45,16 @@ export function BoardList() {
             ))}
           </Tbody>
         </Table>
+      </Box>
+      <Box>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((pageNumber) => (
+          <Button
+            onClick={() => navigate(`/?page=${pageNumber}`)}
+            key={pageNumber}
+          >
+            {pageNumber}
+          </Button>
+        ))}
       </Box>
     </Box>
   );
