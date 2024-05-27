@@ -2,7 +2,13 @@ import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faAnglesLeft,
+  faAnglesRight,
+  faUserSecret,
+} from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function BoardList() {
@@ -59,11 +65,13 @@ export function BoardList() {
       <Box>
         {pageInfo.prevPageNumber && (
           <>
-            <Button onClick={() => navigate(`/?page=1`)}>처음</Button>
+            <Button onClick={() => navigate(`/?page=1`)}>
+              <FontAwesomeIcon icon={faAnglesLeft} />
+            </Button>
             <Button
               onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
             >
-              이전
+              <FontAwesomeIcon icon={faAngleLeft} />
             </Button>
           </>
         )}
@@ -79,9 +87,18 @@ export function BoardList() {
           </Button>
         ))}
         {pageInfo.nextPageNumber && (
-          <Button onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}>
-            다음
-          </Button>
+          <>
+            <Button
+              onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+            >
+              <FontAwesomeIcon icon={faAngleRight} />
+            </Button>
+            <Button
+              onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
+            >
+              <FontAwesomeIcon icon={faAnglesRight} />
+            </Button>
+          </>
         )}
       </Box>
     </Box>
