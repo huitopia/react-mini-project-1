@@ -1,4 +1,17 @@
-import { Box, Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  Input,
+  Select,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -16,6 +29,8 @@ export function BoardList() {
   const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [searchType, setSearchType] = useState("all");
+  const [searchKeyword, setSearchKeyword] = useState("");
   useEffect(() => {
     axios
       .get(`/api/board/list?${searchParams}`)
@@ -30,6 +45,10 @@ export function BoardList() {
   const pageNumbers = [];
   for (let i = pageInfo.leftPageNumber; i <= pageInfo.rightPageNumber; i++) {
     pageNumbers.push(i);
+  }
+
+  function handleSearchClick() {
+    navigate(`/?type=${searchType}&keyword=${searchKeyword}`);
   }
 
   return (
@@ -62,44 +81,68 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
+      <Center>
+        <Flex>
+          <Box>
+            <Select onChange={(e) => setSearchType(e.target.value)}>
+              <option value={"all"}>전체</option>
+              <option value={"text"}>글</option>
+              <option value={"nickName"}>작성자</option>
+            </Select>
+          </Box>
+          <Box>
+            <Input
+              placeholder={"검색어"}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <Button type={"submit"} onClick={handleSearchClick}>
+              Search
+            </Button>
+          </Box>
+        </Flex>
+      </Center>
       <Box>
-        {pageInfo.prevPageNumber && (
-          <>
-            <Button onClick={() => navigate(`/?page=1`)}>
-              <FontAwesomeIcon icon={faAnglesLeft} />
-            </Button>
+        <Center>
+          {pageInfo.prevPageNumber && (
+            <>
+              <Button onClick={() => navigate(`/?page=1`)}>
+                <FontAwesomeIcon icon={faAnglesLeft} />
+              </Button>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAngleLeft} />
+              </Button>
+            </>
+          )}
+          {pageNumbers.map((pageNumber) => (
             <Button
-              onClick={() => navigate(`/?page=${pageInfo.prevPageNumber}`)}
+              onClick={() => navigate(`/?page=${pageNumber}`)}
+              key={pageNumber}
+              colorScheme={
+                pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
+              }
             >
-              <FontAwesomeIcon icon={faAngleLeft} />
+              {pageNumber}
             </Button>
-          </>
-        )}
-        {pageNumbers.map((pageNumber) => (
-          <Button
-            onClick={() => navigate(`/?page=${pageNumber}`)}
-            key={pageNumber}
-            colorScheme={
-              pageNumber === pageInfo.currentPageNumber ? "blue" : "gray"
-            }
-          >
-            {pageNumber}
-          </Button>
-        ))}
-        {pageInfo.nextPageNumber && (
-          <>
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAngleRight} />
-            </Button>
-            <Button
-              onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
-            >
-              <FontAwesomeIcon icon={faAnglesRight} />
-            </Button>
-          </>
-        )}
+          ))}
+          {pageInfo.nextPageNumber && (
+            <>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.nextPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAngleRight} />
+              </Button>
+              <Button
+                onClick={() => navigate(`/?page=${pageInfo.lastPageNumber}`)}
+              >
+                <FontAwesomeIcon icon={faAnglesRight} />
+              </Button>
+            </>
+          )}
+        </Center>
       </Box>
     </Box>
   );
