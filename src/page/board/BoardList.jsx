@@ -22,7 +22,7 @@ export function BoardList() {
   }, [searchParams]); // searchParams 변경 시 함수 재실행
 
   const pageNumbers = [];
-  for (let i = 1; i <= pageInfo.lastPageNumber; i++) {
+  for (let i = pageInfo.leftPageNumber; i <= pageInfo.rightPageNumber; i++) {
     pageNumbers.push(i);
   }
 
