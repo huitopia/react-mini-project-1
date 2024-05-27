@@ -7,15 +7,25 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState([]);
+  const [pageInfo, setPageInfo] = useState({});
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   useEffect(() => {
     axios
       .get(`/api/board/list?${searchParams}`)
-      .then((res) => setBoardList(res.data))
+      .then((res) => {
+        setBoardList(res.data.boardList);
+        setPageInfo(res.data.pageInfo);
+      })
       .catch()
       .finally();
   }, [searchParams]); // searchParams 변경 시 함수 재실행
+
+  const pageNumbers = [];
+  for (let i = 1; i <= pageInfo.lastPageNumber; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
     <Box>
       <Box>게시물 목록</Box>
@@ -47,7 +57,7 @@ export function BoardList() {
         </Table>
       </Box>
       <Box>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((pageNumber) => (
+        {pageNumbers.map((pageNumber) => (
           <Button
             onClick={() => navigate(`/?page=${pageNumber}`)}
             key={pageNumber}
