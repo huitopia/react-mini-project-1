@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -7,6 +7,7 @@ import {
   Checkbox,
   Flex,
   FormControl,
+  FormHelperText,
   FormLabel,
   Image,
   Input,
@@ -29,6 +30,7 @@ export function BoardEdit() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
   const [removeFileList, setRemoveFileList] = useState([]);
+  const [addFileList, setAddFileList] = useState([]);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -74,6 +76,11 @@ export function BoardEdit() {
     }
   };
 
+  const fileNameList = [];
+  for (let addFile of addFileList) {
+    fileNameList.push(<li>{addFile.name}</li>);
+  }
+
   if (board == null) {
     return <Spinner />;
   }
@@ -99,7 +106,25 @@ export function BoardEdit() {
           ></Textarea>
         </FormControl>
       </Box>
-      {/* image file */}
+      {/* create image file */}
+      <Box>
+        <FormControl>
+          <FormLabel>파일</FormLabel>
+          <Input
+            multiple
+            type={"file"}
+            accept="image/*"
+            onChange={(e) => setAddFileList(e.target.files)}
+          />
+          <FormHelperText>
+            총 용량은 10MB, 한 파일은 1MB를 초과할 수 없습니다.
+          </FormHelperText>
+        </FormControl>
+      </Box>
+      <Box>
+        <ul>{fileNameList}</ul>
+      </Box>
+      {/* delete image file */}
       <Box>
         {board.fileList &&
           board.fileList.map((file) => (
