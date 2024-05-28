@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Button,
   Center,
@@ -20,6 +21,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faImages,
   faUserSecret,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -93,7 +95,15 @@ export function BoardList() {
                   cursor={"pointer"}
                 >
                   <Td>{board.id}</Td>
-                  <Td>{board.title}</Td>
+                  <Td>
+                    {board.title}
+                    {board.numberOfImages && (
+                      <Badge>
+                        <FontAwesomeIcon icon={faImages} />
+                        {board.numberOfImages}
+                      </Badge>
+                    )}
+                  </Td>
                   <Td>{board.writer}</Td>
                 </Tr>
               ))}
