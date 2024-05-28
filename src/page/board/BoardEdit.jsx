@@ -98,7 +98,7 @@ export function BoardEdit() {
           ></Textarea>
         </FormControl>
       </Box>
-      // -- image file
+      {/* image file */}
       <Box>
         {board.files &&
           board.files.map((file) => (
