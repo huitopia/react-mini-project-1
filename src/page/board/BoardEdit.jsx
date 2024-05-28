@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
+  Badge,
   Box,
   Button,
   Checkbox,
@@ -78,7 +79,20 @@ export function BoardEdit() {
 
   const fileNameList = [];
   for (let addFile of addFileList) {
-    fileNameList.push(<li>{addFile.name}</li>);
+    // 이미 있는 파일과 중복된 파일명인지 확인 후 일치하면 덮어쓰기
+    let duplicate = false;
+    for (let file of board.fileList) {
+      if (file.name === addFile.name) {
+        duplicate = true;
+        break;
+      }
+    }
+    fileNameList.push(
+      <li>
+        {addFile.name}
+        {duplicate && <Badge colorScheme={"red"}>중복</Badge>}
+      </li>,
+    );
   }
 
   if (board == null) {
