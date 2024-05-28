@@ -4,6 +4,8 @@ import axios from "axios";
 import {
   Box,
   Button,
+  Checkbox,
+  Flex,
   FormControl,
   FormLabel,
   Image,
@@ -15,14 +17,18 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Text,
   Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export function BoardEdit() {
   const { id } = useParams();
   const [board, setBoard] = useState(null);
+  const [removeFileList, setRemoveFileList] = useState([]);
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,6 +65,14 @@ export function BoardEdit() {
       });
   }
 
+  const handleRemoveCheckBoxChange = (name, checked) => {
+    if (checked) {
+      setRemoveFileList([...removeFileList, name]);
+    } else {
+      setRemoveFileList(removeFileList.filter((item) => item !== name));
+    }
+  };
+
   if (board == null) {
     return <Spinner />;
   }
@@ -84,11 +98,30 @@ export function BoardEdit() {
           ></Textarea>
         </FormControl>
       </Box>
+      // -- image file
       <Box>
         {board.files &&
           board.files.map((file) => (
             <Box border={"2px solid black"} m={3} key={file.name}>
-              <Image src={file.src} />
+              <Flex m={3}>
+                <Checkbox
+                  onChange={(e) =>
+                    handleRemoveCheckBoxChange(file.name, e.target.checked)
+                  }
+                />
+                <FontAwesomeIcon icon={faTrash} />
+                <Text>{file.name}</Text>
+              </Flex>
+              <Box>
+                <Image
+                  sx={
+                    removeFileList.includes(file.name)
+                      ? { filter: "blur(8px)" }
+                      : {}
+                  }
+                  src={file.src}
+                />
+              </Box>
             </Box>
           ))}
       </Box>
