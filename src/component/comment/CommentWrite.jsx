@@ -1,9 +1,10 @@
-import { Box, Button, Textarea } from "@chakra-ui/react";
+import { Box, Button, Textarea, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import axios from "axios";
 
 export function CommentWrite({ boardId }) {
   const [comment, setComment] = useState("");
+  const toast = useToast();
 
   function handleCommentSubmitClick() {
     axios
@@ -11,9 +12,16 @@ export function CommentWrite({ boardId }) {
         boardId,
         comment,
       })
-      .then((res) => {})
+      .then((res) => {
+        toast({
+          status: "success",
+          description: "댓글 작성 완료",
+          position: "top",
+          duration: 1000,
+        });
+      })
       .catch(() => {})
-      .finally(() => {});
+      .finally();
   }
 
   return (

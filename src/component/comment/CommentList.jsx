@@ -15,7 +15,6 @@ export function CommentList({ boardId }) {
       })
       .finally(() => {});
   }, []);
-
   if (commentList.length == 0) {
     return <Box>댓글이 없습니다. 첫 댓글을 작성해보세요.</Box>;
   }
@@ -24,7 +23,7 @@ export function CommentList({ boardId }) {
       {commentList.map((comment) => (
         <Box key={comment.id} border="1px solid gray" my={3}>
           <Flex>
-            <Box>{comment.memberId}</Box>
+            <Box>{comment.nickName}</Box>
             <Spacer />
             <Box>{comment.inserted}</Box>
           </Flex>
