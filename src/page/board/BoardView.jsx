@@ -19,6 +19,7 @@ import {
   Spacer,
   Spinner,
   Textarea,
+  Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -28,6 +29,7 @@ import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export function BoardView() {
+  const [isLikeProcessing, setIsLikeProcessing] = useState(false);
   const [board, setBoard] = useState(null);
   const [like, setLike] = useState({
     like: false,
@@ -88,13 +90,19 @@ export function BoardView() {
     return <Spinner />;
   }
   function handleClickLike() {
+    if (!account.isLoggedIn()) {
+      return;
+    }
+    setIsLikeProcessing(true);
     axios
       .put(`/api/board/like`, { boardId: board.id })
       .then((res) => {
         setLike(res.data);
       })
       .catch(() => {})
-      .finally(() => {});
+      .finally(() => {
+        setIsLikeProcessing(false);
+      });
   }
 
   return (
@@ -102,13 +110,26 @@ export function BoardView() {
       <Flex>
         <Heading>{board.id}번 게시물</Heading>
         <Spacer />
-        <Flex>
-          <Box onClick={handleClickLike} cursor="pointer" fontSize="3xl">
-            {like.like && <FontAwesomeIcon icon={fullHeart} />}
-            {like.like || <FontAwesomeIcon icon={emptyHeart} />}
+        {isLikeProcessing || (
+          <Flex>
+            <Tooltip
+              hasArrow
+              isDisabled={account.isLoggedIn()}
+              label="로그인 해주세요"
+            >
+              <Box onClick={handleClickLike} cursor="pointer" fontSize="3xl">
+                {like.like && <FontAwesomeIcon icon={fullHeart} />}
+                {like.like || <FontAwesomeIcon icon={emptyHeart} />}
+              </Box>
+            </Tooltip>
+            <Box fontSize="3xl">{like.count}</Box>
+          </Flex>
+        )}
+        {isLikeProcessing && (
+          <Box pr={3}>
+            <Spinner />
           </Box>
-          <Box fontSize="3xl">{like.count}</Box>
-        </Flex>
+        )}
       </Flex>
       <Box>
         <FormControl>
