@@ -21,6 +21,7 @@ import {
   faAngleRight,
   faAnglesLeft,
   faAnglesRight,
+  faComment,
   faHeart,
   faImages,
   faUserSecret,
@@ -107,8 +108,14 @@ export function BoardList() {
                         {board.numberOfImages}
                       </Badge>
                     )}
+                    {board.numberOfComments > 0 && (
+                      <Badge>
+                        <FontAwesomeIcon icon={faComment} />
+                        {board.numberOfComments}
+                      </Badge>
+                    )}
                   </Td>
-                  <Td>{board.numberOfLike > 0 && board.numberOfLike}</Td>
+                  <Td>{board.numberOfLike > 0 ? board.numberOfLike : 0}</Td>
                   <Td>{board.writer}</Td>
                 </Tr>
               ))}
