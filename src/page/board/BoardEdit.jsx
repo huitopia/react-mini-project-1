@@ -36,7 +36,7 @@ export function BoardEdit() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
-    axios.get(`/api/board/${id}`).then((res) => setBoard(res.data));
+    axios.get(`/api/board/${id}`).then((res) => setBoard(res.data.board));
   }, []);
 
   function handleClickUpdate() {
