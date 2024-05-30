@@ -1,10 +1,11 @@
-import { Box, Button, Textarea, useToast } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Button, Textarea, Tooltip, useToast } from "@chakra-ui/react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { LoginContext } from "../LoginProvider.jsx";
 
 export function CommentWrite({ boardId, isSending, setIsSending }) {
   const [comment, setComment] = useState("");
-
+  const account = useContext(LoginContext);
   const toast = useToast();
 
   function handleCommentSubmitClick() {
@@ -30,18 +31,29 @@ export function CommentWrite({ boardId, isSending, setIsSending }) {
   return (
     <Box>
       <Textarea
-        placeholder={"댓글 작성하는 곳"}
+        isDisabled={!account.isLoggedIn()}
+        placeholder={
+          account.isLoggedIn()
+            ? "댓글 작성 가능"
+            : "로그인 유저만 댓글 작성 가능"
+        }
         value={comment}
         onChange={(e) => setComment(e.target.value)}
       />
-      <Button
-        isDisabled={comment.trim().length === 0}
-        isLoading={isSending}
-        colorScheme={"blue"}
-        onClick={handleCommentSubmitClick}
+      <Tooltip
+        label={"로그인 필요"}
+        isDisabled={account.isLoggedIn()}
+        placement={"top"}
       >
-        등록
-      </Button>
+        <Button
+          isDisabled={comment.trim().length === 0 || !account.isLoggedIn()}
+          isLoading={isSending}
+          colorScheme={"blue"}
+          onClick={handleCommentSubmitClick}
+        >
+          등록
+        </Button>
+      </Tooltip>
     </Box>
   );
 }
