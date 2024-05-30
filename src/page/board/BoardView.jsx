@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   Box,
   Button,
+  ButtonGroup,
   Flex,
   FormControl,
   FormLabel,
@@ -170,15 +171,17 @@ export function BoardView() {
       </Box>
       {account.hasAccess(board.memberId) && (
         <Box>
-          <Button
-            colorScheme={"cyan"}
-            onClick={() => navigate(`/edit/${board.id}`)}
-          >
-            수정
-          </Button>
-          <Button colorScheme={"red"} onClick={onOpen}>
-            삭제
-          </Button>
+          <ButtonGroup variant={"outline"} size="sm">
+            <Button
+              colorScheme={"blue"}
+              onClick={() => navigate(`/edit/${board.id}`)}
+            >
+              수정
+            </Button>
+            <Button colorScheme={"red"} onClick={onOpen}>
+              삭제
+            </Button>
+          </ButtonGroup>
         </Box>
       )}
 
