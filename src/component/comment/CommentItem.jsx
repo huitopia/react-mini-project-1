@@ -2,7 +2,9 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Center,
   Flex,
+  Heading,
   Modal,
   ModalBody,
   ModalContent,
@@ -10,6 +12,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Spacer,
+  Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -41,43 +44,53 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
   }
 
   return (
-    <Box border="1px solid gray" my={3}>
-      <Flex>
-        <Box>{comment.nickName}</Box>
-        <Spacer />
-        <Box>{comment.inserted}</Box>
-      </Flex>
-      <Flex>
-        <Box>{comment.comment}</Box>
-        <Spacer />
-        <Box>
-          <Button
-            size={"xs"}
-            variant="ghost"
-            colorScheme={"red"}
-            onClick={onOpen}
-            isLoading={isProcessing}
-          >
-            <FontAwesomeIcon icon={faXmark} />
-          </Button>
+    <Center>
+      <Box bgColor={"gray.100"} mb={3} borderRadius="15" w={"80%"}>
+        <Box m={3}>
+          <Flex>
+            <Box>
+              <Heading size={"sm"}>{comment.nickName}</Heading>
+            </Box>
+            <Spacer />
+            <Box>
+              <Text fontSize={"sm"} as="sup">
+                {comment.inserted}
+              </Text>
+            </Box>
+          </Flex>
+          <Flex ml={3}>
+            <Box>{comment.comment}</Box>
+            <Spacer />
+            <Box>
+              <Button
+                size={"xs"}
+                variant="ghost"
+                colorScheme={"red"}
+                onClick={onOpen}
+                isLoading={isProcessing}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </Button>
+            </Box>
+          </Flex>
         </Box>
-      </Flex>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>삭제 확인</ModalHeader>
-            <ModalBody>댓글 삭제?</ModalBody>
-            <ModalFooter>
-              <ButtonGroup size={"xs"} variant="outline">
-                <Button onClick={onClose}>cancel</Button>
-                <Button colorScheme={"red"} onClick={handleRemoveClick}>
-                  delete
-                </Button>
-              </ButtonGroup>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
-      </Modal>
-    </Box>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay>
+            <ModalContent>
+              <ModalHeader>삭제 확인</ModalHeader>
+              <ModalBody>댓글 삭제?</ModalBody>
+              <ModalFooter>
+                <ButtonGroup size={"xs"} variant="outline">
+                  <Button onClick={onClose}>cancel</Button>
+                  <Button colorScheme={"red"} onClick={handleRemoveClick}>
+                    delete
+                  </Button>
+                </ButtonGroup>
+              </ModalFooter>
+            </ModalContent>
+          </ModalOverlay>
+        </Modal>
+      </Box>
+    </Center>
   );
 }

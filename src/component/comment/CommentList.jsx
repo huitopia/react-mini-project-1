@@ -22,7 +22,7 @@ export function CommentList({ boardId, isProcessing, setIsProcessing }) {
     return <Box>댓글이 없습니다. 첫 댓글을 작성해보세요.</Box>;
   }
   return (
-    <Box>
+    <Box mt={10}>
       {commentList.map((comment) => (
         <CommentItem
           isProcessing={isProcessing}
