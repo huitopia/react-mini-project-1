@@ -15,6 +15,7 @@ export function CommentWrite({ boardId, isSending, setIsSending }) {
         comment,
       })
       .then((res) => {
+        setComment("");
         toast({
           status: "success",
           description: "댓글 작성 완료",
