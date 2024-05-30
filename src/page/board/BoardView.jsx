@@ -27,6 +27,7 @@ import { LoginContext } from "../../component/LoginProvider.jsx";
 import { faHeart as fullHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CommentComponent } from "../../component/comment/CommentComponent.jsx";
 
 export function BoardView() {
   const [isLikeProcessing, setIsLikeProcessing] = useState(false);
@@ -180,6 +181,9 @@ export function BoardView() {
           </Button>
         </Box>
       )}
+
+      {/* Comment */}
+      <CommentComponent boardId={board.id} />
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay>
