@@ -17,14 +17,16 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faXmark } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { LoginContext } from "../LoginProvider.jsx";
+import { CommentEdit } from "./CommentEdit.jsx";
 
 export function CommentItem({ comment, isProcessing, setIsProcessing }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const account = useContext(LoginContext);
+  const [isEditing, setIsEditing] = useState(false);
   const toast = useToast();
   function handleRemoveClick() {
     setIsProcessing(true);
@@ -61,23 +63,41 @@ export function CommentItem({ comment, isProcessing, setIsProcessing }) {
               </Text>
             </Box>
           </Flex>
-          <Flex ml={3}>
-            <Box>{comment.comment}</Box>
-            <Spacer />
-            {account.hasAccess(comment.memberId) && (
-              <Box>
-                <Button
-                  size={"xs"}
-                  variant="ghost"
-                  colorScheme={"red"}
-                  onClick={onOpen}
-                  isLoading={isProcessing}
-                >
-                  <FontAwesomeIcon icon={faXmark} />
-                </Button>
-              </Box>
-            )}
-          </Flex>
+          {isEditing || (
+            <Flex ml={3}>
+              <Box>{comment.comment}</Box>
+              <Spacer />
+              {account.hasAccess(comment.memberId) && (
+                <Box>
+                  <ButtonGroup size={"xs"} variant="ghost">
+                    {/* comment update */}
+                    <Button
+                      colorScheme={"blue"}
+                      onClick={() => setIsEditing(true)}
+                    >
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </Button>
+                    {/* comment delete */}
+                    <Button
+                      colorScheme={"red"}
+                      onClick={onOpen}
+                      isLoading={isProcessing}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </Button>
+                  </ButtonGroup>
+                </Box>
+              )}
+            </Flex>
+          )}
+          {isEditing && (
+            <CommentEdit
+              comment={comment}
+              setIsEditing={setIsEditing}
+              setIsProcessing={setIsProcessing}
+              isProcessing={isProcessing}
+            />
+          )}
         </Box>
         {/* comment delete modal */}
         {account.hasAccess(comment.memberId) && (
