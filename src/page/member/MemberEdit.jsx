@@ -1,9 +1,11 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Input,
   InputGroup,
   InputRightElement,
@@ -135,15 +137,17 @@ export function MemberEdit() {
 
   return (
     <Box>
-      <Box>회원 정보 수정</Box>
-      <Box>
-        <Box>
+      <Box mb={10}>
+        <Heading>회원 정보 수정</Heading>
+      </Box>
+      <Box mb={7}>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>이메일</FormLabel>
             <Input readOnly value={member.email} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>암호</FormLabel>
             <Input
@@ -152,21 +156,25 @@ export function MemberEdit() {
               }
               placeholder={"암호를 변경하려면 입력하세요"}
             />
-            <FormHelperText>
-              입력하지 않으면 기존 암호를 변경하지 않습니다.
-            </FormHelperText>
+            <Box ml={"2%"}>
+              <FormHelperText>
+                입력하지 않으면 기존 암호를 변경하지 않습니다.
+              </FormHelperText>
+            </Box>
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>암호 확인</FormLabel>
             <Input onChange={(e) => setPasswordCheck(e.target.value)} />
             {member.password === passwordCheck || (
-              <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
+              <Box ml={"2%"}>
+                <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
+              </Box>
             )}
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>별명</FormControl>
           <InputGroup>
             <Input
@@ -188,14 +196,19 @@ export function MemberEdit() {
             </InputRightElement>
           </InputGroup>
         </Box>
-        <Box>
-          <Button
-            isDisabled={isDisableSaveButton}
-            onClick={onOpen}
-            colorScheme={"blue"}
-          >
-            저장
-          </Button>
+        <Box mb={7}>
+          <Center>
+            <Button
+              isDisabled={isDisableSaveButton}
+              onClick={onOpen}
+              colorScheme={"blue"}
+              w={"20%"}
+              border={"2px"}
+              variant={"outline"}
+            >
+              저장
+            </Button>
+          </Center>
         </Box>
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
