@@ -1,6 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import { Box, Button, ButtonGroup, Flex, Textarea } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,16 +18,28 @@ export function CommentEdit({
   isProcessing,
 }) {
   const [commentText, setCommentText] = useState(comment.comment);
+  const toast = useToast();
 
   function handleCommentSubmit() {
+    setIsProcessing(true);
     axios
       .put("/api/comment/edit", {
         id: comment.id,
         comment: commentText,
       })
-      .then(() => {})
+      .then(() => {
+        toast({
+          status: "success",
+          description: "Update Success",
+          position: "top",
+          duration: 1000,
+        });
+      })
       .catch(() => {})
-      .finally(() => {});
+      .finally(() => {
+        setIsProcessing(false);
+        setIsEditing(false);
+      });
   }
 
   return (
@@ -33,7 +52,11 @@ export function CommentEdit({
       </Box>
       <Box>
         <ButtonGroup size={"xs"} variant="ghost">
-          <Button colorScheme={"blue"} onClick={handleCommentSubmit}>
+          <Button
+            colorScheme={"blue"}
+            onClick={handleCommentSubmit}
+            isLoading={isProcessing}
+          >
             <FontAwesomeIcon icon={faCheck} />
           </Button>
           <Button colorScheme={"red"} onClick={() => setIsEditing(false)}>
