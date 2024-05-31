@@ -173,28 +173,30 @@ export function BoardView() {
         </FormControl>
       </Box>
       {account.hasAccess(board.memberId) && (
-        <Box mt={5} mb={100}>
-          <Center>
-            <ButtonGroup variant={"outline"} width="30%" size={"md"}>
-              <Button
-                width="40%"
-                border="2px"
-                colorScheme={"blue"}
-                onClick={() => navigate(`/edit/${board.id}`)}
-              >
-                수정
-              </Button>
-              <Button
-                width="40%"
-                border="2px"
-                colorScheme={"red"}
-                onClick={onOpen}
-              >
-                삭제
-              </Button>
-            </ButtonGroup>
-          </Center>
-        </Box>
+        <Center>
+          <Box mt={10} mb={20} w={"40%"}>
+            <Center>
+              <ButtonGroup variant={"outline"} w={"70%"}>
+                <Button
+                  width="50%"
+                  border="2px"
+                  colorScheme={"blue"}
+                  onClick={() => navigate(`/edit/${board.id}`)}
+                >
+                  수정
+                </Button>
+                <Button
+                  width="50%"
+                  border="2px"
+                  colorScheme={"red"}
+                  onClick={onOpen}
+                >
+                  삭제
+                </Button>
+              </ButtonGroup>
+            </Center>
+          </Box>
+        </Center>
       )}
 
       {/* Comment */}
