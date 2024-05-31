@@ -1,9 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { Center, Flex, Spacer } from "@chakra-ui/react";
+import { Box, Center, Flex, Hide, Show, Spacer } from "@chakra-ui/react";
 import { useContext } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEarthAsia, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEarthAsia,
+  faPencil,
+  faRightFromBracket,
+  faRightToBracket,
+  faUser,
+  faUserPlus,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -38,7 +46,10 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          Write
+          <Show below={"lg"}>
+            <FontAwesomeIcon icon={faPencil} />
+          </Show>
+          <Hide below={"lg"}>Write</Hide>
         </Center>
       )}
       <Spacer />
@@ -52,8 +63,14 @@ export function Navbar() {
           fontWeight={600}
           gap={2}
         >
-          {account.nickName}
-          <FontAwesomeIcon icon={faUser} />
+          <Flex gap={2}>
+            <Box>
+              <FontAwesomeIcon icon={faUser} />
+            </Box>
+            <Box>
+              <Hide below={"lg"}>{account.nickName}</Hide>
+            </Box>
+          </Flex>
         </Center>
       )}
       {account.isAdmin() && (
@@ -65,7 +82,7 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          Member
+          <FontAwesomeIcon icon={faUsers} />
         </Center>
       )}
       {account.isLoggedIn() || (
@@ -77,7 +94,7 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          SignUp
+          <FontAwesomeIcon icon={faUserPlus} />
         </Center>
       )}
       {account.isLoggedIn() || (
@@ -89,7 +106,7 @@ export function Navbar() {
           fontSize={20}
           fontWeight={600}
         >
-          LogIn
+          <FontAwesomeIcon icon={faRightToBracket} />
         </Center>
       )}
       {account.isLoggedIn() && (
@@ -104,7 +121,7 @@ export function Navbar() {
           fontSize={15}
           fontWeight={600}
         >
-          LogOut
+          <FontAwesomeIcon icon={faRightFromBracket} />
         </Center>
       )}
     </Flex>
