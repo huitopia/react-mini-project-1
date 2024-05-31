@@ -1,8 +1,10 @@
 import {
   Box,
   Button,
+  Center,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   useToast,
 } from "@chakra-ui/react";
@@ -43,27 +45,41 @@ export function MemberLogin() {
   }
 
   return (
-    <Box>
-      <Box>로그인</Box>
-      <Box>
-        <Box>
-          <FormControl>
-            <FormLabel>이메일</FormLabel>
-            <Input onChange={(e) => setEmail(e.target.value)} />
-          </FormControl>
+    <Center>
+      <Box w={"60%"}>
+        <Box mb={10}>
+          <Heading>로그인</Heading>
         </Box>
         <Box>
-          <FormControl>
-            <FormLabel>암호</FormLabel>
-            <Input onChange={(e) => setPassword(e.target.value)} />
-          </FormControl>
-        </Box>
-        <Box>
-          <Button onClick={handleLogin} colorScheme={"blue"}>
-            로그인
-          </Button>
+          <Box mb={8}>
+            <FormControl>
+              <FormLabel>이메일</FormLabel>
+              <Input onChange={(e) => setEmail(e.target.value)} />
+            </FormControl>
+          </Box>
+          <Box mb={8}>
+            <FormControl>
+              <FormLabel>암호</FormLabel>
+              <Input onChange={(e) => setPassword(e.target.value)} />
+            </FormControl>
+          </Box>
+          <Box>
+            <Center>
+              <Button
+                onClick={handleLogin}
+                colorScheme={"blue"}
+                variant={"outline"}
+                size="md"
+                height="48px"
+                width="30%"
+                border="2px"
+              >
+                로그인
+              </Button>
+            </Center>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Center>
   );
 }
