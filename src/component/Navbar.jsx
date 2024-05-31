@@ -1,86 +1,111 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Flex, Spacer } from "@chakra-ui/react";
+import { Center, Flex, Spacer } from "@chakra-ui/react";
 import { useContext } from "react";
 import { LoginContext } from "./LoginProvider.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEarthAsia, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export function Navbar() {
   const navigate = useNavigate();
   const account = useContext(LoginContext);
   return (
-    <Flex gap={3}>
-      <Box
-        _hover={{ bgColor: "gray.100" }}
+    <Flex
+      gap={3}
+      px={{
+        lg: 200,
+        base: 0,
+      }}
+      h={20}
+      bgColor="blue.50"
+      color={"gray.700"}
+    >
+      <Center
+        _hover={{ color: "blue.600" }}
         cursor={"pointer"}
         onClick={() => navigate("/")}
+        p={8}
+        fontSize={30}
+        fontWeight={600}
       >
-        HOME
-      </Box>
+        <FontAwesomeIcon icon={faEarthAsia} />
+      </Center>
       {account.isLoggedIn() && (
-        <Box
-          _hover={{ bgColor: "gray.100" }}
+        <Center
+          _hover={{ color: "blue.600" }}
           cursor={"pointer"}
           onClick={() => navigate("/write")}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
         >
           Write
-        </Box>
+        </Center>
       )}
       <Spacer />
       {account.isLoggedIn() && (
-        <Box
+        <Center
           onClick={() => navigate(`/member/${account.id}`)}
           cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
+          _hover={{ color: "blue.600" }}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
+          gap={2}
         >
           {account.nickName}
           <FontAwesomeIcon icon={faUser} />
-        </Box>
+        </Center>
       )}
       {account.isAdmin() && (
-        <Box
-          _hover={{ bgColor: "gray.100" }}
+        <Center
+          _hover={{ color: "blue.600" }}
           onClick={() => navigate("/member/list")}
           cursor={"pointer"}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
         >
-          MemberList
-        </Box>
+          Member
+        </Center>
       )}
       {account.isLoggedIn() || (
-        <Box
-          _hover={{ bgColor: "gray.100" }}
+        <Center
+          _hover={{ color: "blue.600" }}
           onClick={() => navigate("/signup")}
           cursor={"pointer"}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
         >
           SignUp
-        </Box>
+        </Center>
       )}
       {account.isLoggedIn() || (
-        <Box
+        <Center
           onClick={() => navigate("/login")}
           cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
+          _hover={{ color: "blue.600" }}
+          p={8}
+          fontSize={20}
+          fontWeight={600}
         >
           LogIn
-        </Box>
+        </Center>
       )}
       {account.isLoggedIn() && (
-        <Box
+        <Center
           onClick={() => {
             account.logout();
             navigate("/login");
           }}
           cursor={"pointer"}
-          _hover={{
-            bgColor: "gray.200",
-          }}
+          _hover={{ color: "blue.600" }}
+          p={8}
+          fontSize={15}
+          fontWeight={600}
         >
           LogOut
-        </Box>
+        </Center>
       )}
     </Flex>
   );
