@@ -110,103 +110,110 @@ export function BoardView() {
   }
 
   return (
-    <Center>
-      <Box>
-        <Flex mt={5}>
-          <Heading>{board.id}번 게시물</Heading>
-          <Spacer />
-          {isLikeProcessing || (
-            <Flex>
-              <Tooltip
-                hasArrow
-                isDisabled={account.isLoggedIn()}
-                label="로그인 해주세요"
-              >
-                <Box onClick={handleClickLike} cursor="pointer" fontSize="3xl">
-                  {like.like && <FontAwesomeIcon icon={fullHeart} />}
-                  {like.like || <FontAwesomeIcon icon={emptyHeart} />}
-                </Box>
-              </Tooltip>
-              <Box fontSize="3xl">{like.count}</Box>
-            </Flex>
-          )}
-          {isLikeProcessing && (
-            <Box pr={3}>
-              <Spinner />
-            </Box>
-          )}
-        </Flex>
-        <Box className={"form-box"}>
-          <FormControl>
-            <FormLabel>title</FormLabel>
-            <Input value={board.title} readOnly={true} />
-          </FormControl>
-        </Box>
-        <Box className={"form-box"}>
-          <FormControl>
-            <FormLabel>content</FormLabel>
-            <Textarea readOnly={true}>{board.content}</Textarea>
-          </FormControl>
-        </Box>
-        <Box className={"form-box"}>
-          <FormLabel>image</FormLabel>
-          {board.fileList &&
-            board.fileList.map((file) => (
-              <Box border={"2px solid black"} m={3} key={file.name}>
-                <Image src={file.src} />
+    <Box>
+      <Flex mt={5}>
+        <Heading>{board.id}번 게시물</Heading>
+        <Spacer />
+        {isLikeProcessing || (
+          <Flex>
+            <Tooltip
+              hasArrow
+              isDisabled={account.isLoggedIn()}
+              label="로그인 해주세요"
+            >
+              <Box onClick={handleClickLike} cursor="pointer" fontSize="3xl">
+                {like.like && <FontAwesomeIcon icon={fullHeart} />}
+                {like.like || <FontAwesomeIcon icon={emptyHeart} />}
               </Box>
-            ))}
-        </Box>
-        <Box className={"form-box"}>
-          <FormControl>
-            <FormLabel>writer</FormLabel>
-            <Input value={board.writer} readOnly={true} />
-          </FormControl>
-        </Box>
-        <Box className={"form-box"}>
-          <FormControl>
-            <FormLabel>inserted</FormLabel>
-            <Input
-              type={"datetime-local"}
-              value={board.inserted}
-              readOnly={true}
-            />
-          </FormControl>
-        </Box>
-        {account.hasAccess(board.memberId) && (
-          <Box mt={5} mb={100}>
-            <ButtonGroup variant={"outline"} size="sm">
+            </Tooltip>
+            <Box fontSize="3xl">{like.count}</Box>
+          </Flex>
+        )}
+        {isLikeProcessing && (
+          <Box pr={3}>
+            <Spinner />
+          </Box>
+        )}
+      </Flex>
+      <Box className={"form-box"}>
+        <FormControl>
+          <FormLabel>title</FormLabel>
+          <Input value={board.title} readOnly={true} />
+        </FormControl>
+      </Box>
+      <Box className={"form-box"}>
+        <FormControl>
+          <FormLabel>content</FormLabel>
+          <Textarea readOnly={true}>{board.content}</Textarea>
+        </FormControl>
+      </Box>
+      <Box className={"form-box"}>
+        <FormLabel>image</FormLabel>
+        {board.fileList &&
+          board.fileList.map((file) => (
+            <Box border={"2px solid black"} m={3} key={file.name}>
+              <Image src={file.src} />
+            </Box>
+          ))}
+      </Box>
+      <Box className={"form-box"}>
+        <FormControl>
+          <FormLabel>writer</FormLabel>
+          <Input value={board.writer} readOnly={true} />
+        </FormControl>
+      </Box>
+      <Box className={"form-box"}>
+        <FormControl>
+          <FormLabel>inserted</FormLabel>
+          <Input
+            type={"datetime-local"}
+            value={board.inserted}
+            readOnly={true}
+          />
+        </FormControl>
+      </Box>
+      {account.hasAccess(board.memberId) && (
+        <Box mt={5} mb={100}>
+          <Center>
+            <ButtonGroup variant={"outline"} width="30%" size={"md"}>
               <Button
+                width="40%"
+                border="2px"
                 colorScheme={"blue"}
                 onClick={() => navigate(`/edit/${board.id}`)}
               >
                 수정
               </Button>
-              <Button colorScheme={"red"} onClick={onOpen}>
+              <Button
+                width="40%"
+                border="2px"
+                colorScheme={"red"}
+                onClick={onOpen}
+              >
                 삭제
               </Button>
             </ButtonGroup>
-          </Box>
-        )}
+          </Center>
+        </Box>
+      )}
 
-        {/* Comment */}
-        <CommentComponent boardId={board.id} />
+      {/* Comment */}
+      <CommentComponent boardId={board.id} />
 
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay>
-            <ModalContent>
-              <ModalHeader>{board.id}번 게시물</ModalHeader>
-              <ModalBody>delete?</ModalBody>
-              <ModalFooter>
-                <Button onClick={onClose}>Cancel</Button>
-                <Button colorScheme={"red"} onClick={handleClickRemove}>
-                  Delete
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </ModalOverlay>
-        </Modal>
-      </Box>
-    </Center>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader>{board.id}번 게시물</ModalHeader>
+            <ModalBody>delete?</ModalBody>
+            <ModalFooter>
+              <Button onClick={onClose}>Cancel</Button>
+              <Button colorScheme={"red"} onClick={handleClickRemove}>
+                Delete
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </ModalOverlay>
+      </Modal>
+    </Box>
   );
 }
