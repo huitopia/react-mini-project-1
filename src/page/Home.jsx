@@ -6,7 +6,13 @@ export function Home() {
   return (
     <Box>
       <Navbar />
-      <Box>
+      <Box
+        mx={{
+          base: 0,
+          lg: 150,
+        }}
+        mt={10}
+      >
         <Outlet />
       </Box>
     </Box>
