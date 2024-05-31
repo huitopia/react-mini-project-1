@@ -167,14 +167,16 @@ export function MemberSignup() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {isCheckedEmail || (
-                <FormHelperText>이메일 중복확인을 해주세요.</FormHelperText>
-              )}
-              {isValidEmail || (
-                <FormHelperText>
-                  올바른 이메일 형식으로 작성해 주세요.
-                </FormHelperText>
-              )}
+              <Box ml={"2%"}>
+                {isCheckedEmail || (
+                  <FormHelperText>이메일 중복확인을 해주세요.</FormHelperText>
+                )}
+                {isValidEmail || (
+                  <FormHelperText>
+                    올바른 이메일 형식으로 작성해 주세요.
+                  </FormHelperText>
+                )}
+              </Box>
             </FormControl>
           </Box>
           <Box mb={5}>
@@ -187,9 +189,11 @@ export function MemberSignup() {
             <FormControl>
               <FormLabel>암호확인</FormLabel>
               <Input onChange={(e) => setPasswordCheck(e.target.value)} />
-              {isCheckedPassword || (
-                <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
-              )}
+              <Box ml={"2%"}>
+                {isCheckedPassword || (
+                  <FormHelperText>암호가 일치하지 않습니다.</FormHelperText>
+                )}
+              </Box>
             </FormControl>
           </Box>
           <Box mb={8}>
@@ -213,21 +217,29 @@ export function MemberSignup() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {isCheckedNickName || (
-                <FormHelperText>별명 중복확인을 해주세요.</FormHelperText>
-              )}
+              <Box ml={"2%"}>
+                {isCheckedNickName || (
+                  <FormHelperText>별명 중복확인을 해주세요.</FormHelperText>
+                )}
+              </Box>
             </FormControl>
           </Box>
-          <Box ml={"90%"}>
-            <Button
-              isLoading={isLoading}
-              colorScheme={"blue"}
-              onClick={handleClick}
-              isDisabled={isDisabled}
-              variant={"outline"}
-            >
-              가입
-            </Button>
+          <Box>
+            <Center>
+              <Button
+                isLoading={isLoading}
+                colorScheme={"blue"}
+                onClick={handleClick}
+                isDisabled={isDisabled}
+                variant={"outline"}
+                size="md"
+                height="48px"
+                width="30%"
+                border="2px"
+              >
+                가입
+              </Button>
+            </Center>
           </Box>
         </Box>
       </Box>
