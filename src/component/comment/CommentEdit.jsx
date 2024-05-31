@@ -5,7 +5,14 @@ import {
   Button,
   ButtonGroup,
   Flex,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Textarea,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +25,7 @@ export function CommentEdit({
   isProcessing,
 }) {
   const [commentText, setCommentText] = useState(comment.comment);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
   function handleCommentSubmit() {
@@ -54,7 +62,7 @@ export function CommentEdit({
         <ButtonGroup size={"xs"} variant="ghost">
           <Button
             colorScheme={"blue"}
-            onClick={handleCommentSubmit}
+            onClick={onOpen}
             isLoading={isProcessing}
           >
             <FontAwesomeIcon icon={faCheck} />
@@ -64,6 +72,23 @@ export function CommentEdit({
           </Button>
         </ButtonGroup>
       </Box>
+      {/* comment edit modal */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader>수정 확인</ModalHeader>
+            <ModalBody>댓글을 수정?</ModalBody>
+            <ModalFooter>
+              <ButtonGroup size={"xs"} variant="outline">
+                <Button onClick={onClose}>cancel</Button>
+                <Button colorScheme={"blue"} onClick={handleCommentSubmit}>
+                  update
+                </Button>
+              </ButtonGroup>
+            </ModalFooter>
+          </ModalContent>
+        </ModalOverlay>
+      </Modal>
     </Flex>
   );
 }
