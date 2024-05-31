@@ -2,8 +2,10 @@ import {
   Badge,
   Box,
   Button,
+  ButtonGroup,
   Center,
   Flex,
+  Heading,
   Input,
   Select,
   Table,
@@ -74,19 +76,21 @@ export function BoardList() {
 
   return (
     <Box>
-      <Box>게시물 목록</Box>
-      <Box>
+      <Box mb={10}>
+        <Heading>Board View</Heading>
+      </Box>
+      <Box mb={10}>
         {boardList.length === 0 && <Center>조회 결과가 없습니다.</Center>}
         {boardList.length > 0 && (
           <Table>
             <Thead>
               <Tr>
-                <Th>#</Th>
+                <Th w={20}>#</Th>
                 <Th>TITLE</Th>
-                <Th>
+                <Th w={20}>
                   <FontAwesomeIcon icon={faHeart} />
                 </Th>
-                <Th>
+                <Th w={40}>
                   <FontAwesomeIcon icon={faUserSecret} />
                 </Th>
               </Tr>
@@ -123,8 +127,8 @@ export function BoardList() {
           </Table>
         )}
       </Box>
-      <Center>
-        <Flex>
+      <Center mb={10}>
+        <Flex gap={1}>
           <Box>
             <Select
               value={searchType}
@@ -150,21 +154,25 @@ export function BoardList() {
         </Flex>
       </Center>
       <Box>
-        <Center>
+        <Center gap={1}>
           {pageInfo.prevPageNumber && (
             <>
-              <Button onClick={() => handlePageButtonClick(1)}>
-                <FontAwesomeIcon icon={faAnglesLeft} />
-              </Button>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </Button>
+              <ButtonGroup size={"sm"} variant="outline">
+                <Button onClick={() => handlePageButtonClick(1)}>
+                  <FontAwesomeIcon icon={faAnglesLeft} />
+                </Button>
+                <Button
+                  onClick={() => handlePageButtonClick(pageInfo.prevPageNumber)}
+                >
+                  <FontAwesomeIcon icon={faAngleLeft} />
+                </Button>
+              </ButtonGroup>
             </>
           )}
           {pageNumbers.map((pageNumber) => (
             <Button
+              size={"sm"}
+              variant={"outline"}
               onClick={() => handlePageButtonClick(pageNumber)}
               key={pageNumber}
               colorScheme={
@@ -176,16 +184,18 @@ export function BoardList() {
           ))}
           {pageInfo.nextPageNumber && (
             <>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAngleRight} />
-              </Button>
-              <Button
-                onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
-              >
-                <FontAwesomeIcon icon={faAnglesRight} />
-              </Button>
+              <ButtonGroup size={"sm"} variant="outline">
+                <Button
+                  onClick={() => handlePageButtonClick(pageInfo.nextPageNumber)}
+                >
+                  <FontAwesomeIcon icon={faAngleRight} />
+                </Button>
+                <Button
+                  onClick={() => handlePageButtonClick(pageInfo.lastPageNumber)}
+                >
+                  <FontAwesomeIcon icon={faAnglesRight} />
+                </Button>
+              </ButtonGroup>
             </>
           )}
         </Center>

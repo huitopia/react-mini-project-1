@@ -4,7 +4,7 @@ import { Navbar } from "../component/Navbar.jsx";
 
 export function Home() {
   return (
-    <Box>
+    <Box mb={300}>
       <Navbar />
       <Box
         mx={{

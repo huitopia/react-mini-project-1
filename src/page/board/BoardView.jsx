@@ -111,7 +111,7 @@ export function BoardView() {
 
   return (
     <Center>
-      <Box w={"80%"}>
+      <Box>
         <Flex mt={5}>
           <Heading>{board.id}번 게시물</Heading>
           <Spacer />
