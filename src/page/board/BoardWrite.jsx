@@ -1,10 +1,17 @@
 import {
   Box,
   Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Center,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Input,
+  Stack,
+  StackDivider,
   Textarea,
   useToast,
 } from "@chakra-ui/react";
@@ -68,21 +75,23 @@ export function BoardWrite() {
 
   return (
     <Box>
-      <Box>글 작성 화면</Box>
+      <Box mb={10}>
+        <Heading>글 작성</Heading>
+      </Box>
       <Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>제목</FormLabel>
             <Input onChange={(e) => setTitle(e.target.value)} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>본문</FormLabel>
             <Textarea onChange={(e) => setContent(e.target.value)} />
           </FormControl>
         </Box>
-        <Box>
+        <Box mb={7}>
           <FormControl>
             <FormLabel>파일</FormLabel>
             <Input
@@ -96,24 +105,42 @@ export function BoardWrite() {
             </FormHelperText>
           </FormControl>
         </Box>
-        <Box>
-          <ul>{fileNameList}</ul>
-        </Box>
-        <Box>
+        {fileNameList.length > 0 && (
+          <Box mb={7}>
+            <Card>
+              <CardHeader>
+                <Heading size="md">선택된 파일 목록</Heading>
+              </CardHeader>
+              <CardBody>
+                <Stack divider={<StackDivider />} spacing={4}>
+                  {fileNameList}
+                </Stack>
+              </CardBody>
+            </Card>
+          </Box>
+        )}
+        <Box mb={7}>
           <FormControl>
             <FormLabel>작성자</FormLabel>
             <Input readOnly value={account.nickName} />
           </FormControl>
         </Box>
-        <Box>
-          <Button
-            isLoading={loading}
-            isDisabled={disableSaveButton}
-            colorScheme={"blue"}
-            onClick={handleSaveClick}
-          >
-            저장
-          </Button>
+        <Box mb={7}>
+          <Center>
+            <Button
+              isLoading={loading}
+              isDisabled={disableSaveButton}
+              colorScheme={"blue"}
+              onClick={handleSaveClick}
+              variant={"outline"}
+              size="md"
+              height="48px"
+              width="10%"
+              border="2px"
+            >
+              저장
+            </Button>
+          </Center>
         </Box>
       </Box>
     </Box>
