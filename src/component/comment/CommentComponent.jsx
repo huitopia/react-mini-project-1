@@ -8,7 +8,7 @@ import { faComments } from "@fortawesome/free-solid-svg-icons";
 export function CommentComponent({ boardId }) {
   const [isProcessing, setIsProcessing] = useState(false);
   return (
-    <Box>
+    <Box mt={20}>
       <Center mb={7}>
         <Heading size={"md"}>
           <FontAwesomeIcon icon={faComments} /> COMMENTS

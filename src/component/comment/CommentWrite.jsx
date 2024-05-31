@@ -61,6 +61,7 @@ export function CommentWrite({ boardId, isProcessing, setIsProcessing }) {
             isLoading={isProcessing}
             onClick={handleCommentSubmitClick}
             colorScheme={"blue"}
+            variant={"outline"}
           >
             등록
           </Button>
